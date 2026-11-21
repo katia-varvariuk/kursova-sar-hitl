@@ -1,0 +1,28 @@
+# Єдина схема шару 1 (ТЗ, розд. 4). Один клас детекції + атрибути.
+categories:
+  - id: 1
+    name: person
+
+attributes:
+  pose: [standing, walking, sitting, bent, kneeling, lying, unknown]
+  visibility: [full, partial, partially_buried, unknown]
+  modality: [rgb, thermal]
+  provenance: [original_dataset, model, vlm, annotator, expert, consensus]
+
+# Гармонізація поз: id з вихідного датасету -> pose зі схеми.
+pose_maps:
+  c2a:
+    0: bent
+    1: kneeling
+    2: lying
+    3: sitting
+    4: standing   # Upright
+  sard: {}        # у копії SARD поз немає
+
+defaults:
+  c2a:
+    visibility: unknown   # у C2A видимість не розмічена
+    modality: rgb
+  sard:
+    visibility: unknown
+    modality: rgb

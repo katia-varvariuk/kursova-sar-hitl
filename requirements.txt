@@ -1,0 +1,19 @@
+# torch/torchvision ставляться окремо з індексу CUDA 12.1:
+#   uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+ultralytics
+fiftyone
+cleanlab
+mlflow
+fastapi
+uvicorn[standard]
+label-studio-sdk
+pycocotools
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+pyyaml
+tqdm
+requests
+pytest
