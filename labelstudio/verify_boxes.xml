@@ -1,0 +1,37 @@
+<!-- Верифікація рамок «людина». Клавіші: p — рамка; 1/2/3 — вердикт; поза q–u; видимість a–f. -->
+<View>
+  <Header value="Верифікація рамок: людина"/>
+  <Text name="hint" value="$hint"/>
+  <Image name="image" value="$image" zoom="true" zoomControl="true" rotateControl="false"/>
+
+  <RectangleLabels name="person_box" toName="image" strokeWidth="1" opacity="0.6">
+    <Label value="person" background="#e8590c" hotkey="p"/>
+  </RectangleLabels>
+
+  <View visibleWhen="region-selected">
+    <Header value="Поза" size="5"/>
+    <Choices name="pose" toName="image" perRegion="true" choice="single" showInline="true">
+      <Choice value="стоїть" alias="standing" hotkey="q"/>
+      <Choice value="йде" alias="walking" hotkey="w"/>
+      <Choice value="сидить" alias="sitting" hotkey="e"/>
+      <Choice value="нахилена" alias="bent" hotkey="r"/>
+      <Choice value="на колінах" alias="kneeling" hotkey="t"/>
+      <Choice value="лежить" alias="lying" hotkey="y"/>
+      <Choice value="невизначено" alias="unknown" hotkey="u"/>
+    </Choices>
+    <Header value="Видимість" size="5"/>
+    <Choices name="visibility" toName="image" perRegion="true" choice="single" showInline="true">
+      <Choice value="повна" alias="full" hotkey="a"/>
+      <Choice value="часткова" alias="partial" hotkey="s"/>
+      <Choice value="частково засипана" alias="partially_buried" hotkey="d"/>
+      <Choice value="невизначено" alias="unknown" hotkey="f"/>
+    </Choices>
+  </View>
+
+  <Header value="Вердикт по зображенню" size="5"/>
+  <Choices name="verdict" toName="image" choice="single-radio" required="true" showInline="true">
+    <Choice value="усі рамки правильні" alias="accepted" hotkey="1"/>
+    <Choice value="виправлено" alias="corrected" hotkey="2"/>
+    <Choice value="людей немає" alias="no_person" hotkey="3"/>
+  </Choices>
+</View>
