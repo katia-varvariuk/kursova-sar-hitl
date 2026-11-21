@@ -1,0 +1,50 @@
+{
+  "coef": {
+    "t0_c2a": 10.27478204577755,
+    "t0_sard": 11.446826943662703,
+    "b_kept": 0.6682484203311004,
+    "b_added": 2.0564516490902065,
+    "b_removed": 5.667774948009609
+  },
+  "ci95": {
+    "t0_c2a": [
+      0.0,
+      37.43348147034062
+    ],
+    "t0_sard": [
+      7.789216873182787,
+      15.749536042096027
+    ],
+    "b_kept": [
+      0.0,
+      2.4060767270811856
+    ],
+    "b_added": [
+      0.0,
+      3.38815577875964
+    ],
+    "b_removed": [
+      1.259039882745864,
+      38.682491806875035
+    ]
+  },
+  "n_tasks": 38,
+  "n_bootstrap": 2000,
+  "huber_delta_s": 17.93366567828021,
+  "median_abs_error_s": 7.958740213806468,
+  "tasks_per_dataset_mode": {
+    "c2a/blind": 5,
+    "c2a/preann": 10,
+    "sard/blind": 8,
+    "sard/preann": 15
+  },
+  "observed_median_lead_time_s": {
+    "c2a/blind": 28.54,
+    "c2a/preann": 35.837999999999994,
+    "sard/blind": 14.6425,
+    "sard/preann": 11.733
+  },
+  "source_logs": [
+    "logs\\labelstudio\\project1_summary.csv"
+  ]
+}
