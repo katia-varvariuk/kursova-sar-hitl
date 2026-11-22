@@ -1,0 +1,337 @@
+{
+ "$defs": {
+  "AttributeProvenance": {
+   "additionalProperties": false,
+   "properties": {
+    "pose": {
+     "anyOf": [
+      {
+       "enum": [
+        "original_dataset",
+        "model",
+        "vlm",
+        "annotator",
+        "expert",
+        "consensus"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "title": "Pose"
+    },
+    "environment": {
+     "anyOf": [
+      {
+       "enum": [
+        "original_dataset",
+        "model",
+        "vlm",
+        "annotator",
+        "expert",
+        "consensus"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "title": "Environment"
+    },
+    "group": {
+     "anyOf": [
+      {
+       "enum": [
+        "rule",
+        "annotator",
+        "expert",
+        "vlm",
+        "model"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "title": "Group"
+    },
+    "keypoints": {
+     "anyOf": [
+      {
+       "enum": [
+        "original_dataset",
+        "model",
+        "vlm",
+        "annotator",
+        "expert",
+        "consensus"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "title": "Keypoints"
+    },
+    "priority": {
+     "anyOf": [
+      {
+       "enum": [
+        "original_dataset",
+        "model",
+        "vlm",
+        "annotator",
+        "expert",
+        "consensus"
+       ],
+       "type": "string"
+      },
+      {
+       "type": "null"
+      }
+     ],
+     "title": "Priority"
+    }
+   },
+   "required": [
+    "pose",
+    "environment",
+    "group",
+    "keypoints",
+    "priority"
+   ],
+   "title": "AttributeProvenance",
+   "type": "object"
+  },
+  "Attributes": {
+   "additionalProperties": false,
+   "properties": {
+    "pose": {
+     "enum": [
+      "standing",
+      "walking",
+      "sitting",
+      "bent",
+      "kneeling",
+      "lying",
+      "unknown"
+     ],
+     "title": "Pose",
+     "type": "string"
+    },
+    "visibility": {
+     "enum": [
+      "full",
+      "partial",
+      "partially_buried",
+      "unknown"
+     ],
+     "title": "Visibility",
+     "type": "string"
+    },
+    "modality": {
+     "enum": [
+      "rgb",
+      "thermal"
+     ],
+     "title": "Modality",
+     "type": "string"
+    },
+    "environment": {
+     "enum": [
+      "rubble",
+      "water",
+      "fire_smoke",
+      "traffic",
+      "forest_mountain",
+      "other"
+     ],
+     "title": "Environment",
+     "type": "string"
+    },
+    "group": {
+     "enum": [
+      "single",
+      "group"
+     ],
+     "title": "Group",
+     "type": "string"
+    },
+    "gesture": {
+     "enum": [
+      "yes",
+      "no",
+      "unknown"
+     ],
+     "title": "Gesture",
+     "type": "string"
+    }
+   },
+   "required": [
+    "pose",
+    "visibility",
+    "modality",
+    "environment",
+    "group",
+    "gesture"
+   ],
+   "title": "Attributes",
+   "type": "object"
+  }
+ },
+ "additionalProperties": false,
+ "description": "Один запис маніфесту = одна підтверджена людина.",
+ "properties": {
+  "crop_id": {
+   "pattern": "^[a-z0-9]+_[a-z]+_\\d{6}_\\d{3}$",
+   "title": "Crop Id",
+   "type": "string"
+  },
+  "source_dataset": {
+   "enum": [
+    "c2a",
+    "sard"
+   ],
+   "title": "Source Dataset",
+   "type": "string"
+  },
+  "source_split": {
+   "description": "файл гармонізованого COCO, у якому шукати image_id",
+   "enum": [
+    "train",
+    "val",
+    "pool",
+    "test"
+   ],
+   "title": "Source Split",
+   "type": "string"
+  },
+  "image_id": {
+   "minimum": 0,
+   "title": "Image Id",
+   "type": "integer"
+  },
+  "file_name": {
+   "title": "File Name",
+   "type": "string"
+  },
+  "scene": {
+   "title": "Scene",
+   "type": "string"
+  },
+  "bbox": {
+   "description": "[x, y, w, h], px вихідного зображення",
+   "items": {
+    "type": "number"
+   },
+   "maxItems": 4,
+   "minItems": 4,
+   "title": "Bbox",
+   "type": "array"
+  },
+  "keypoints": {
+   "anyOf": [
+    {
+     "items": {
+      "items": {
+       "type": "number"
+      },
+      "type": "array"
+     },
+     "type": "array"
+    },
+    {
+     "type": "null"
+    }
+   ],
+   "default": null,
+   "description": "17 точок COCO [x, y, conf] у координатах вихідного зображення; null — не визначено",
+   "title": "Keypoints"
+  },
+  "crop_path": {
+   "title": "Crop Path",
+   "type": "string"
+  },
+  "context_path": {
+   "title": "Context Path",
+   "type": "string"
+  },
+  "context_bbox": {
+   "items": {
+    "type": "number"
+   },
+   "maxItems": 4,
+   "minItems": 4,
+   "title": "Context Bbox",
+   "type": "array"
+  },
+  "priority": {
+   "enum": [
+    "red",
+    "yellow",
+    "green",
+    "undetermined"
+   ],
+   "title": "Priority",
+   "type": "string"
+  },
+  "attributes": {
+   "$ref": "#/$defs/Attributes"
+  },
+  "provenance": {
+   "enum": [
+    "original_dataset",
+    "model",
+    "vlm",
+    "annotator",
+    "expert",
+    "consensus"
+   ],
+   "title": "Provenance",
+   "type": "string"
+  },
+  "attribute_provenance": {
+   "$ref": "#/$defs/AttributeProvenance"
+  },
+  "confidence": {
+   "maximum": 1.0,
+   "minimum": 0.0,
+   "title": "Confidence",
+   "type": "number"
+  },
+  "split": {
+   "enum": [
+    "train",
+    "val",
+    "test"
+   ],
+   "title": "Split",
+   "type": "string"
+  }
+ },
+ "required": [
+  "crop_id",
+  "source_dataset",
+  "source_split",
+  "image_id",
+  "file_name",
+  "scene",
+  "bbox",
+  "crop_path",
+  "context_path",
+  "context_bbox",
+  "priority",
+  "attributes",
+  "provenance",
+  "attribute_provenance",
+  "confidence",
+  "split"
+ ],
+ "title": "CropRecord",
+ "type": "object"
+}
