@@ -1,0 +1,10 @@
+ultralytics==8.4.216
+cleanlab==2.9.0
+mlflow==3.18.0
+fastapi==0.163.2
+uvicorn[standard]==0.54.0
+requests==2.34.2
+numpy==2.4.6
+pandas==3.1.1
+PyYAML==6.0.4
+scikit-learn==1.9.1

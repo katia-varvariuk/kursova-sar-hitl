@@ -1,0 +1,57 @@
+# docker compose -f docker/docker-compose.yml up -d
+# Label Studio: http://localhost:8080, MLflow: http://localhost:5000
+
+services:
+  label-studio:
+    image: heartexlabs/label-studio:1.23.2
+    ports:
+      - "8080:8080"
+    env_file: .env
+    environment:
+      LOCAL_FILES_SERVING_ENABLED: "true"
+      LOCAL_FILES_DOCUMENT_ROOT: /label-studio/files
+    volumes:
+      - ../labelstudio/ls_data:/label-studio/data
+      - ../data:/label-studio/files/data:ro
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.18.0
+    ports:
+      - "5000:5000"
+    command: >
+      mlflow server
+      --host 0.0.0.0 --port 5000
+      --backend-store-uri sqlite:////mlruns/mlflow_server.db
+      --serve-artifacts --artifacts-destination /mlruns/server_artifacts
+      --allowed-hosts "localhost:*,127.0.0.1:*,mlflow:*"
+    volumes:
+      - ../mlruns:/mlruns
+    restart: unless-stopped
+
+  # оркестратор на CPU: --profile orchestrator up -d --build
+  orchestrator:
+    profiles: ["orchestrator"]
+    networks:
+      default:
+        aliases: [orchestrator.test]
+    build:
+      context: ..
+      dockerfile: docker/orchestrator.Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      LABEL_STUDIO_URL: http://label-studio:8080
+      LABEL_STUDIO_PUBLIC_URL: http://localhost:8080
+      LABEL_STUDIO_API_KEY: ${LABEL_STUDIO_API_KEY}
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      ORCH_WORK: /app/data/work/orchestrator_docker
+      ORCH_EVENTS: /app/logs/orchestrator/events_docker.jsonl
+    volumes:
+      - ../src:/app/src:ro
+      - ../configs:/app/configs:ro
+      - ../data:/app/data
+      - ../runs:/app/runs
+      - ../logs:/app/logs
+    depends_on: [label-studio, mlflow]
+    restart: unless-stopped
