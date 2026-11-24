@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-TAG, SEEDS = "q2_sard", (0, 1, 2)
+TAG, SEEDS = "q2_sard", (0, 1, 2, 3, 4)
 TAB, FIG = ROOT / "reports/tables", ROOT / "reports/figures"
 COLORS = {"random": "#2a78d6", "uncertainty": "#eb6834"}
 LABELS = {"random": "випадковий відбір (умови А, Б)", "uncertainty": "АМН: невизначеність (умова В)"}
@@ -99,7 +99,7 @@ def main() -> None:
         ax.plot(q, c.mean(0), color=COLORS[st], marker=marker, markersize=7, linewidth=2, label=LABELS[st])
     ax.set_xlabel("Людських запитів (зображень SARD)")
     ax.set_ylabel("Розмічено людей (рамок для навчання)")
-    ax.set_title("Що дає бюджет запитів: людей у відібраних тайлах (смуга — min–max за 3 сідами)",
+    ax.set_title(f"Що дає бюджет запитів: людей у відібраних тайлах (смуга — min–max за {len(SEEDS)} сідами)",
                  fontsize=10, color="#1f1e1d")
     ax.legend(frameon=False, fontsize=8, loc="upper left")
     fig.tight_layout()
