@@ -36,6 +36,18 @@ powershell -ExecutionPolicy Bypass -File scripts\run_overnight.ps1
 
 API: `/init`, `/rounds/select`, `/sync`, `/train`, `/metrics`, `/export`. Документація — http://localhost:8000/docs.
 
+Прогнозний модуль і демо (модель `models/yolo11n_sard.pt` — копія
+`data/work/al/q2_sard_random_seed0/runs/r6/weights/last.pt`):
+
+```powershell
+.venv\Scripts\python src\predict.py data\processed\sard\images	est\<файл>.jpg
+.venv\Scripts\python src\demo_app.py
+.venv\Scripts\python srcaselines.py
+.venv\Scripts\python src\explain.py
+```
+
+Демо — http://127.0.0.1:7860.
+
 ## Структура
 
 - `src/` — гармонізація, оракул, експерименти, маршрутизація, оркестратор, маніфест кропів
@@ -49,4 +61,5 @@ API: `/init`, `/rounds/select`, `/sync`, `/train`, `/metrics`, `/export`. Док
 - Аудит розмітки (3 сіди): Cleanlab знаходить 37.5% помилок за 20% перевірок, випадковий порядок — 20.7%.
 - АМН C2A → SARD (5 сідів), 350 запитів: recall 0.59 [0.58; 0.60] (випадковий відбір) і 0.53 [0.51; 0.55] (невизначеність), Wilcoxon p = 0.0625.
 - Маршрутизація на SARD: 54–59% рамок приймаються автоматично, до людини потрапляє 81–88% помилок.
+- Драбина базових рішень на тесті SARD (recall): правило без ML 0, YOLO11n COCO 0.25, після C2A 0.13, після АМН на SARD 0.65.
 - SAHI (нарізка 320/256): на C2A recall 0.58 → 0.68–0.69 (дрібні люди), на SARD без приросту, precision падає.
