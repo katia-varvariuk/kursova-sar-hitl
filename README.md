@@ -36,13 +36,19 @@ powershell -ExecutionPolicy Bypass -File scripts\run_overnight.ps1
 
 API: `/init`, `/rounds/select`, `/sync`, `/train`, `/metrics`, `/export`. Документація — http://localhost:8000/docs.
 
-Прогнозний модуль і демо (модель `models/yolo11n_sard.pt` — копія
-`data/work/al/q2_sard_random_seed0/runs/r6/weights/last.pt`):
+Моделі в `models/`:
+
+- `yolo11n_sard.pt` — фінальна: YOLO11n (COCO) → C2A → АМН на SARD (умова А, seed 0, 350 запитів);
+  копія `data/work/al/q2_sard_random_seed0/runs/r6/weights/last.pt`;
+- `yolo11n_c2a.pt` — після навчання на C2A (30 епох), стартова для АМН і оркестратора;
+  копія `runs/baseline_c2a/yolo11n_e30/weights/best.pt`.
+
+Прогнозний модуль і демо:
 
 ```powershell
-.venv\Scripts\python src\predict.py data\processed\sard\images	est\<файл>.jpg
+.venv\Scripts\python src\predict.py data\processed\sard\images\test\<файл>.jpg
 .venv\Scripts\python src\demo_app.py
-.venv\Scripts\python srcaselines.py
+.venv\Scripts\python src\baselines.py
 .venv\Scripts\python src\explain.py
 ```
 
